@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+system_env/
+
+# IDE & OS cache files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Project configuration
+.env
+.env.local
+.env.*
+!.env.example
