@@ -1,0 +1,29 @@
+[
+  {
+    "ticket_id": "TKT-99104",
+    "subject": "Delayed Payout: Funds missing for chase account ending in 4920",
+    "body": "Hello, I initiated a payout of $12,500.00 from my merchant dashboard last Thursday. My dashboard says the transfer is complete, but my Chase bank account ending in 4920 has not received the credit. Usually it arrives within 24 hours. Can someone check if the payment is stuck on your end? This is impacting our payroll! Thank you.",
+    "customer_email": "accounting@merchantlabs.com",
+    "status": "Escalated",
+    "priority": "Urgent",
+    "created_at": "2026-05-18T08:30:00Z"
+  },
+  {
+    "ticket_id": "TKT-99105",
+    "subject": "Double charged for premium monthly subscription",
+    "body": "Hi Support team. I am writing because I was charged twice for my Premium Business subscription this month. I received two receipts from Stripe, both dated May 18th for $150.00 each, showing different transaction IDs. Please refund the duplicate transaction as soon as possible. Thank you.",
+    "customer_email": "jane.doe@fintechcorp.io",
+    "status": "Open",
+    "priority": "High",
+    "created_at": "2026-05-18T09:20:00Z"
+  },
+  {
+    "ticket_id": "TKT-99106",
+    "subject": "Integrations broken: 400 Bad Request on /v2/payments",
+    "body": "Dear Developer Support. Our backend payment flows started throwing 400 Bad Request errors this morning. The API response says: 'Unsupported API Version Header'. We have not changed our code in months. We are using version 1.2 headers as specified in your documentation. Please let us know if there is a system outage or if we need to update our headers immediately.",
+    "customer_email": "dev-ops@ecommercesystems.net",
+    "status": "Open",
+    "priority": "High",
+    "created_at": "2026-05-18T10:15:00Z"
+  }
+]

@@ -10,6 +10,13 @@ from sqlalchemy import text
 from app.core.config import settings
 from app.core.database import sync_engine
 from app.api.health import router as health_router
+from app.api.knowledge import router as knowledge_router
+from app.api.search import router as search_router
+from app.api.analysis import router as analysis_router
+from app.api.challenge import router as challenge_router
+
+
+
 
 # ==============================================================================
 # Unified Application Logging Setup
@@ -37,23 +44,39 @@ async def lifespan(app: FastAPI):
     logger.info(f"Target Environment : {settings.APP_ENV}")
     logger.info(f"Debug Mode Enabled : {settings.DEBUG}")
     
-    # Verify live database connection on startup
-    if sync_engine is not None:
+    # Only probe DB if a DATABASE_URL is explicitly configured.
+    # On Cloud Run (MVP phase), the database is not yet wired — skip gracefully.
+    db_url_configured = bool(settings.DATABASE_URL)
+    if sync_engine is not None and db_url_configured:
         try:
             logger.info("Validating database connection pool...")
             with sync_engine.connect() as conn:
                 conn.execute(text("SELECT 1"))
             logger.info("PostgreSQL database connection: SUCCESSFUL")
         except Exception as e:
-            logger.critical(
-                f"PostgreSQL database connection: FAILED! App may experience degraded state. Error: {e}", 
-                exc_info=True
+            logger.warning(
+                f"PostgreSQL connection check failed (non-fatal): {e}"
             )
     else:
-        logger.warning("Database sync engine is uninitialized. Connection validation skipped.")
+        logger.info("Database not configured — skipping connection probe (MVP mode).")
+
+    # Precompute and cache knowledge base document embeddings on startup
+    try:
+        from app.services.retrieval_service import retrieval_service
+        logger.info("Precomputing knowledge base document embeddings...")
+        retrieval_service.initialize_cache()
+        logger.info("Semantic retrieval cache precomputation: SUCCESSFUL")
+    except Exception as e:
+        # Non-fatal: server still starts and handles requests.
+        # Cache will be lazily rebuilt on the first search request once the API is available.
+        logger.warning(
+            f"Semantic retrieval cache precomputation DEFERRED — will retry on first request. "
+            f"Reason: {type(e).__name__}: {e}"
+        )
 
     logger.info(f"{settings.APP_NAME} is fully initialized and accepting requests.")
     logger.info("==============================================================")
+
     
     yield
     
@@ -184,3 +207,9 @@ async def general_exception_handler(request: Request, exc: Exception):
 # ==============================================================================
 # Health route mounted directly to base path as requested
 app.include_router(health_router)
+app.include_router(knowledge_router)
+app.include_router(search_router)
+app.include_router(analysis_router)
+app.include_router(challenge_router)
+
+

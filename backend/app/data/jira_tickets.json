@@ -1,0 +1,54 @@
+[
+  {
+    "key": "FIN-1042",
+    "fields": {
+      "summary": "Stripe Payout Failures: International Bank Routing Validation Error",
+      "description": "Critical Bug: Since last week's bank routing library upgrade, cross-border payouts to UK and EU routing formats (IBAN/BIC) are failing regex validation checks. The engine throws a ValidationError and cancels the outbound payout. Alice is looking into updating the regex rules in `validators.py` to support variable-length BIC/SWIFT identifiers.",
+      "status": {
+        "name": "In Progress"
+      },
+      "priority": {
+        "name": "High"
+      },
+      "created": "2026-05-18T07:30:00Z",
+      "updated": "2026-05-18T09:00:00Z",
+      "assignee": {
+        "name": "alice_dev"
+      }
+    }
+  },
+  {
+    "key": "SEC-441",
+    "fields": {
+      "summary": "Duplicate Transaction Charges Due to Network Timeout Retries on Mobile Clients",
+      "description": "CRITICAL: During checkout network degradation, some iOS clients are retrying payments without sending the mandatory `idempotency_key` header, or are generating a new idempotency key on each retry. This is resulting in duplicate credit card charges on Adyen gateway. Need to modify mobile API gatekeeper to reject charge requests lacking a deterministic idempotency header.",
+      "status": {
+        "name": "Open"
+      },
+      "priority": {
+        "name": "Critical"
+      },
+      "created": "2026-05-18T08:15:22Z",
+      "updated": "2026-05-18T08:20:00Z",
+      "assignee": null
+    }
+  },
+  {
+    "key": "INFRA-802",
+    "fields": {
+      "summary": "Deprecate v1.2 Payment API Headers and Route to Legacy Adapter Service",
+      "description": "Refactor: In order to support the new microservice architecture, we are deprecating the `v1.2` payment endpoints. We need to create a routing rule in Envoy to forward any request with header `X-API-Version: 1.2` to a dedicated `legacy-payment-adapter` service, logging a deprecation warning to Datadog.",
+      "status": {
+        "name": "To Do"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "created": "2026-05-17T14:00:00Z",
+      "updated": "2026-05-17T18:30:00Z",
+      "assignee": {
+        "name": "bob_sre"
+      }
+    }
+  }
+]

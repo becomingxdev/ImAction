@@ -1,0 +1,30 @@
+[
+  {
+    "user": "U034B5CC8DD",
+    "username": "ops_alert_bot",
+    "text": "🚨 [ALERT] Payout batch failure detected for Stripe gateway. 154 transactions in status PENDING failed to settle. Error: Gateway timed out (504 Gateway Timeout) during payload handshake. Retrying in backoff mode.",
+    "channel": "ops-alerts",
+    "ts": "2026-05-18T09:12:00Z"
+  },
+  {
+    "user": "U011A5EE9FF",
+    "username": "alice_dev",
+    "text": "@here Heads up team: it looks like some mobile app users are experiencing 400 Bad Request errors on checkout. We traced it back to an API version mismatch on the `/v2/payments` endpoint—the client is sending `v1.2` legacy headers which are no longer supported since last night's deploy.",
+    "channel": "dev-chat",
+    "ts": "2026-05-18T10:05:30Z"
+  },
+  {
+    "user": "U022C8DD2AA",
+    "username": "bob_sre",
+    "text": "Confirmed alice_dev. Checking logs on K8s cluster. Yes, seeing high error counts on `payment-gateway-service`. I will deploy a hotfix fallback middleware to accept the legacy header temporarily while we roll out a forced app store update.",
+    "channel": "dev-chat",
+    "ts": "2026-05-18T10:10:15Z"
+  },
+  {
+    "user": "U034B5CC8DD",
+    "username": "ops_alert_bot",
+    "text": "🚨 [ALERT] Batch settlement task `daily_ach_reconciliation` failed. Details: Unable to parse remote SFTP CSV file from Apex Clearing. Line 432 has an invalid formatting mismatch on field `clearing_house_id` (expected 9 digits, got 8). EOD accounting balance is out of sync by $245,392.10.",
+    "channel": "ops-alerts",
+    "ts": "2026-05-18T11:45:00Z"
+  }
+]
